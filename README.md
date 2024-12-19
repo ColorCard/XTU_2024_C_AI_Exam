@@ -1,6 +1,6 @@
 # 湘潭大学 - 人工智能专业 - 2024级大一C语言期末考试题库
 
-共计**58个**题目，从头歌平台上抓取并排版，题目答案均为个人自做，有出入还请谅解，欢迎各位提交 issue 和 Pr！
+共计**58个**题目，从头歌平台上抓取并排版，题目答案均为个人自做，目前**仍在更新**中，有错误和出入还请谅解，欢迎各位提交 **issue** 和 **Pr**！
 
 觉得有用的话就留下一个 **Star⭐️** 吧！
 
@@ -17,8 +17,8 @@
     输出：  
      55 89 78 186  
       
-个人解答：[T1.c](T1.c)
-```
+个人解答：[T1.c](Exam/T1.c)
+```c
 #include <stdio.h>
 int main(){
         int n;
@@ -54,6 +54,22 @@ int main(){
  **输出格式**  
 输出一行，包含一个浮点数f，表示应付的总费用。精确到小数点后一位。
 
+个人解答：[T2.c](Exam/T2.c)
+```c
+#include <stdio.h>
+
+int main(){
+    int a[10];
+    for(int i=0; i<10; i++){
+        scanf("%d",&a[i]);
+    }
+
+    printf("%.1lf",a[0]*28.9+a[1]*32.7+a[2]*45.6+a[3]*78+a[4]*35+a[5]*86.2+a[6]*27.8+a[7]*43+a[8]*56+a[9]*65);
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 3: 机器翻译
@@ -78,6 +94,55 @@ int main(){
 1 2 1 5 4 4 1  
  **输出样例**  
 5
+
+个人解答：[T3.c](Exam/T3.c)
+```c
+#include <stdio.h>
+
+int judge(const int a[],int n,int m){
+    for (int i = 0; i < n; ++i) {
+        if(a[i]==m){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main(){
+    int M,N;
+    scanf("%d %d",&M,&N);
+    int b[M];
+
+    for (int i = 0; i < M; ++i) {
+        b[i]=-1;
+    }
+
+    int a[N];
+    int index=0;
+    int temp=0;
+    for (int i = 0; i < N; ++i) {
+        scanf("%d",&a[i]);
+        if(judge(b,M,a[i])==0){
+            if(temp<M){
+                b[temp]=a[i];
+                index++;
+                temp++;
+            } else{
+                for (int j = 0; j < M-1; ++j) {
+                    b[j]=b[j+1];
+                }
+                b[M-1]=a[i];
+                index++;
+            }
+        }else{
+            continue;
+        }
+    }
+
+    printf("%d\n",index);
+    return 0;
+}
+```
 
 ---
 
@@ -109,6 +174,26 @@ int main(){
  **输出样例**  
 1.3
 
+个人解答：[T4.c](Exam/T4.c)
+```c
+#include <stdio.h>
+int main(){
+    int n;
+    scanf("%d",&n);
+
+    int index=0;
+    for (int i = 0; i < n; ++i) {
+        int temp;
+        scanf("%d",&temp);
+        index+=(temp+69)/70;
+    }
+
+    printf("%.1lf",index*0.1);
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 5: 球弹跳高度的计算
@@ -132,6 +217,25 @@ int main(){
 59.9219  
 0.0195  
   
+个人解答：[T5.c](Exam/T5.c)
+```c
+#include <stdio.h>
+
+int main(){
+    double h;
+    scanf("%lf",&h);
+    double sum_height=0;
+    for (int i = 0; i < 10; ++i) {
+        sum_height+=h;
+        h/=2;
+        sum_height+=h;
+    }
+
+    printf("%.4lf\n%.4lf",sum_height-h,h);
+
+    return 0;
+}
+```
 
 
 ---
@@ -156,6 +260,34 @@ int main(){
 20.00%  
 40.00%
 
+个人解答：[T6.c](Exam/T6.c)
+```c
+#include <stdio.h>
+
+int main(){
+    int n;
+    scanf("%d", &n);
+    int a = 0,b=0,c=0,d=0;
+    for (int i = 0; i < n; ++i) {
+        int temp;
+        scanf("%d", &temp);
+        if(temp>=0&&temp<=18){
+            a++;
+        }else if(temp>=19&&temp<=35) {
+            b++;
+        } else if(temp>=36&&temp<=60){
+            c++;
+        } else{
+            d++;
+        }
+    }
+
+    printf("%.2f%%\n%.2f%%\n%.2f%%\n%.2f%%\n", a*100.0/n, b*100.0/n, c*100.0/n, d*100.0/n);
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 7: 骑车与走路
@@ -175,6 +307,30 @@ int main(){
   
  **输出样例**  
 Bike
+
+个人解答：[T7.c](Exam/T7.c)
+```c
+#include <stdio.h>
+
+int main() {
+    double distance;
+    scanf("%lf", &distance);
+    double Bike, Walk,All;
+
+    Bike = distance / 3 + 50;
+    Walk = distance / 1.2;
+
+    if (Bike < Walk) {
+        printf("Bike\n");
+    } else if (Bike > Walk) {
+        printf("Walk\n");
+    } else {
+        printf("All\n");
+    }
+
+    return 0;
+}
+```
 
 ---
 
@@ -196,6 +352,26 @@ Bike
 24  
  **输出样例**  
 7026
+
+个人解答：[T8.c](Exam/T8.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int water;
+    scanf("%d", &water);
+    double price = 0;
+    if (water <= 15) {
+        price = water * 2.58;
+    } else if (water <= 22) {
+        price = 15 * 2.58 + (water - 15) * 3.34;
+    } else {
+        price = 15 * 2.58 + 7 * 3.34 + (water - 22) * 4.09;
+    }
+    printf("%.0lf\n", price*100);
+}
+
+```
 
 ---
 
