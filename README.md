@@ -503,7 +503,8 @@ Carso 75
  **输出样例**  
 3
 
-T13.c
+@yestan1125 解答：[T13.c](Exam/T13.c)
+```c
 #include<stdio.h> 
 
 int main()
@@ -522,6 +523,7 @@ int main()
 	printf("%d",cnt);
 	return 0;
 }
+```
 
 ---
 
