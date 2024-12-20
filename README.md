@@ -591,7 +591,7 @@ int main() {
  **输出样例**  
 3
 
- @yestan1125 解答：[T13.c](Exam/T13.c)
+@yestan1125 解答：[T13.c](Exam/T13.c)
 ```c
 #include<stdio.h> 
 
@@ -1774,6 +1774,32 @@ Ifmmp! Ipx bsf zpv!
 提示  
 由于windows和linux下面的换行符不同，所以读入一行字符推荐使用fgets或者gets函数；尽量避免使用getchar读入，后者需要自行解决跨平台问题。
 
+@yestan1125 解答：[T57.c](Exam%2FT57.c)
+```C
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    char str[80];
+    fgets(str, 80, stdin);  
+
+    for (int i = 0; str[i]!= '\0'; i++) {
+        if (isalpha(str[i])) {  
+            if (str[i] == 'z') {
+                str[i] = 'a';
+            } else if (str[i] == 'Z') {
+                str[i] = 'A';
+            } else {
+                str[i]++;  
+            }
+        }
+    }
+    printf("%s", str);
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 58: 计算邮资
@@ -1792,6 +1818,31 @@ Ifmmp! Ipx bsf zpv!
 1200 y  
  **输出样例**  
 17
+
+个人解答：[T58.c](Exam%2FT58.c)
+```C
+#include <stdio.h>
+
+int main() {
+    int weight;  
+    char urgent;  
+    scanf("%d %c", &weight, &urgent);
+
+    int fee = 8;  
+    if (weight > 1000) {
+        
+        int extra = weight - 1000;
+        fee += (extra + 499) / 500 * 4;
+    }
+    if (urgent == 'y') {
+        fee += 5;  
+    }
+
+    printf("%d\n", fee);
+
+    return 0;
+}
+```
 
 ---
 
