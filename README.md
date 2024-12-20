@@ -682,18 +682,78 @@ int main() {
  **输出格式**  
 输出第m天，得流感的人数。  
  **输入样例**  
-5  
-....#  
-.#.@.  
-.#@..  
-#....  
-.....  
+5
+....#
+.#.@.
+.#@..
+#....
+.....
 4  
  **输出样例**  
 16
 
 个人解答：[T15.c](Exam/T15.c)
 ```c
+#include <stdio.h>
+#include <string.h>
+
+void spread(char a[100][100], int n) {
+    char temp[100][100];
+
+    memcpy(temp, a, sizeof(temp));//复制到暂用数组
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (a[i][j] == '@') { // 如果当前房间已经得流感
+                // 传染四个方向
+                if (i - 1 >= 0 && a[i - 1][j] == '.') {
+                    temp[i - 1][j] = '@'; // 上
+                }
+                if (i + 1 < n && a[i + 1][j] == '.') {
+                    temp[i + 1][j] = '@'; // 下
+                }
+                if (j - 1 >= 0 && a[i][j - 1] == '.') {
+                    temp[i][j - 1] = '@'; // 左
+                }
+                if (j + 1 < n && a[i][j + 1] == '.') {
+                    temp[i][j + 1] = '@'; // 右
+                }
+            }
+        }
+    }
+
+    memcpy(a, temp, sizeof(temp));//复制回来
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    char a[100][100];
+
+    for (int i = 0; i < n; ++i) {
+        scanf("%s", a[i]);
+    }
+
+    int day;
+    scanf("%d", &day);
+
+    for(int k=0;k<day-1;k++){
+        spread(a,n);
+    }
+
+    int count=0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (a[i][j]=='@'){
+                count++;
+            }
+        }
+    }
+
+    printf("%d", count);
+
+    return 0;
+}
 ```
 
 ---
@@ -714,6 +774,37 @@ int main() {
  **输出样例**  
 1 2 3 4 5 6 7 8 9 10  
 
+个人解答：[T16.c](Exam/T16.c)
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return *(int *)a - *(int *)b;
+}//升序
+
+int in_compare(const void *a, const void *b) {
+    return *(int *)b - *(int *)a;
+}//降序
+
+int main() {
+    int a[11];
+    for (int i = 0; i < 11; ++i) {
+        scanf("%d", &a[i]);
+    }
+    if (a[0] == 1) {
+        qsort(a+1, 10, sizeof(int), compare);
+    }else{
+        qsort(a+1, 10, sizeof(int), in_compare);
+    }
+
+    for (int i = 1; i < 11; ++i) {
+        printf("%d ", a[i]);
+    }
+
+}
+```
+
 
 ---
 
@@ -732,6 +823,23 @@ int main() {
 5  
  **输出样例**  
 153
+
+个人解答：[T17.c](Exam/T17.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    long long sum=0;
+    long long index=1;
+    for (int i = 1; i <= n; ++i) {
+        index*=i;
+        sum+=index;
+    }
+    printf("%lld", sum);
+}
+```
 
 ---
 
@@ -752,6 +860,29 @@ int main() {
 2 3 2  
  **输出样例**  
 2
+
+个人解答：[T18.c](Exam/T18.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int N,m;
+    scanf("%d %d",&N,&m);
+
+    int count=0;
+    int a[N];
+    for (int i = 0; i < N; ++i) {
+        scanf("%d", &a[i]);
+        if(a[i]==m){
+            count++;
+        }
+    }
+
+    printf("%d", count);
+
+    return 0;
+}
+```
 
 ---
 
@@ -774,6 +905,47 @@ int main() {
 6  
  **输出样例**  
 1,4,7,8,10,11,12
+
+个人解答：[T19.c](Exam/T19.c)
+```c
+#include <stdio.h>
+
+void LED(int a[],int n,int index){
+    for (int i = 0; i < n; ++i) {
+        if((i+1)%index==0){
+            a[i]=!a[i];
+        }
+    }
+}
+
+int main() {
+    int N,M;
+    scanf("%d %d", &N, &M);
+
+    int a[50001];
+    for (int i = 0; i < N; ++i) {
+        a[i]=1;
+    }
+
+    for (int i = 1; i <= M; ++i) {
+        LED(a,N,i);
+    }
+
+    int flag=0;
+    for (int i = 0; i < N; ++i) {
+        if(a[i]==0) {
+            if(flag==0){
+                printf("%d", i+1);
+                flag=1;
+            } else{
+                printf(",%d", i+1);
+            }
+        }
+    }
+
+    return 0;
+}
+```
 
 ---
 

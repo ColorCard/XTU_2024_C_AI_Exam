@@ -1,7 +1,13 @@
-// 这是文件 T17.c
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
-    return 0;
+    int n;
+    scanf("%d", &n);
+    long long sum=0;
+    long long index=1;
+    for (int i = 1; i <= n; ++i) {
+        index*=i;
+        sum+=index;
+    }
+    printf("%lld", sum);
 }
