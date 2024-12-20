@@ -1,7 +1,14 @@
-// 这是文件 T11.c
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
-    return 0;
+    long long n,x,y;
+    scanf("%lld %lld %lld", &n, &x, &y);
+    if(y>=x*n){
+        printf("0");
+    } else if(y%x==0){
+        printf("%lld", n-(y/x));
+    }else {
+        printf("%lld", n-(y/x)-1);
+    }
+
 }

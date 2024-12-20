@@ -423,6 +423,47 @@ Austi 78
 Jesu 76  
 Carso 75
 
+个人解答：[T9.c](Exam/T9.c)
+```c
+#include <stdio.h>
+
+struct student {
+    char name[20];
+    int score;
+};
+
+typedef struct student Student;
+
+void sort(Student *students, int n) {
+    for(int i = 0; i < n - 1; i++) {
+        for(int j = 0; j < n - 1 - i; j++) {
+            if(students[j].score < students[j + 1].score) {
+                Student temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+}//冒泡排序
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    Student students[n];
+    for(int i = 0; i < n; i++) {
+        scanf("%s %d", students[i].name, &students[i].score);
+    }
+    sort(students, n);
+
+    for(int i = 0; i < n; i++) {
+        printf("%s %d\n", students[i].name, students[i].score);
+    }
+
+    return 0;
+}
+
+```
+
 ---
 
 ## 题目 10: 自由落体的时间
@@ -444,6 +485,21 @@ Carso 75
  **输出样例**  
 0.51
 
+个人解答：[T10.c](Exam/T10.c)
+```c
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double height;
+    double g=9.8;
+    scanf("%lf", &height);
+    double time = sqrt(2*height/g);
+    printf("%.2lf", time);
+
+}
+```
+
 ---
 
 ## 题目 11: 苹果和虫子
@@ -460,6 +516,24 @@ Carso 75
 10 4 9  
  **输出样例**  
 7
+
+个人解答：[T11.c](Exam/T11.c)
+```c
+#include <stdio.h>
+
+int main() {
+    long long n,x,y;
+    scanf("%lld %lld %lld", &n, &x, &y);
+    if(y>=x*n){
+        printf("0");
+    } else if(y%x==0){
+        printf("%lld", n-(y/x));
+    }else {
+        printf("%lld", n-(y/x)-1);
+    }
+
+}
+```
 
 ---
 
@@ -479,6 +553,20 @@ Carso 75
 23 11  
  **输出样例**  
 3
+
+个人解答：[T12.c](Exam/T12.c)
+```c
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int h,r;
+    scanf("%d %d",&h,&r);
+    double v=3.14159*r*r*h;
+    printf("%.0lf",ceil(20*1000/v));
+}
+
+```
 
 ---
 
@@ -503,7 +591,7 @@ Carso 75
  **输出样例**  
 3
 
-@yestan1125 解答：[T13.c](Exam/T13.c)
+ @yestan1125 解答：[T13.c](Exam/T13.c)
 ```c
 #include<stdio.h> 
 
@@ -552,6 +640,33 @@ int main()
  **输出样例**  
 2  2  11
 
+个人解答：[T14.c](Exam/T14.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int a[5][5];
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            scanf("%d", &a[i][j]);
+        }
+    }
+    int index_x=0,index_y=0;
+    int min=(2^31)-1;
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            if(a[i][j] < min){
+                index_x = i;
+                index_y = j;
+                min = a[i][j];
+            }
+        }
+    }
+
+    printf("%d  %d  %d", index_x, index_y, a[index_x][index_y]);//注意是两个空格！！
+}
+```
+
 ---
 
 ## 题目 15: 流感传染
@@ -576,6 +691,10 @@ int main()
 4  
  **输出样例**  
 16
+
+个人解答：[T15.c](Exam/T15.c)
+```c
+```
 
 ---
 

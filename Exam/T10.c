@@ -1,7 +1,11 @@
-// 这是文件 T10.c
 #include <stdio.h>
+#include <math.h>
 
 int main() {
-    printf("Hello, World!\n");
-    return 0;
+    double height;
+    double g=9.8;
+    scanf("%lf", &height);
+    double time = sqrt(2*height/g);
+    printf("%.2lf", time);
+
 }
