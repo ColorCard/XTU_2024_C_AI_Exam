@@ -2,6 +2,12 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    long long n;
+    scanf("%lld", &n);
+    if(n%3==0&&n%5==0){
+        printf("YES");
+    } else{
+        printf("NO");
+    }
     return 0;
 }

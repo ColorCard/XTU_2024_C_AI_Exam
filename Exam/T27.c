@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    char n;
+    scanf("%c", &n);
+    printf("%d", n);
     return 0;
 }

@@ -2,6 +2,9 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    int a,b;
+    scanf("%d %d", &a, &b);
+    double c=(double)a/b;
+    printf("%.9lf", c);
     return 0;
 }

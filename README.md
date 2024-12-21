@@ -981,6 +981,41 @@ int main() {
  **输出样例**  
 180
 
+个人解答：[T20.c](Exam/T20.c)
+```c
+#include <stdio.h>
+
+int main() {
+    double n;
+    scanf("%lf", &n);
+
+    double income=n-60000;
+    double tax=0;
+
+    if(income<=0){
+        tax=0;
+    } else if(income<=36000){
+        tax=income*0.03;
+    } else if(income<=144000){
+        tax=income*0.1-2520;
+    } else if(income<=300000){
+        tax=income*0.2-16920;
+    } else if(income<=420000){
+        tax=income*0.25-31920;
+    } else if(income<=660000){
+        tax=income*0.3-52920;
+    } else if(income<=960000){
+        tax=income*0.35-85920;
+    } else {
+        tax=income*0.45-181920;
+    }
+
+    printf("%.0lf", tax);
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 21: 奇数求和
@@ -996,6 +1031,26 @@ int main() {
 7 15  
  **输出样例**  
 55
+
+个人解答：[T21.c](Exam/T21.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int m,n;
+    scanf("%d %d", &m, &n);
+    int sum=0;
+    for (int i = m; i <= n; ++i) {
+        if(i%2!=0){
+            sum+=i;
+        }
+    }
+
+    printf("%d", sum);
+
+    return 0;
+}
+```
 
 ---
 
@@ -1013,6 +1068,33 @@ int main() {
  **输出样例**  
 5
 
+个人解答：[T22.c](Exam/T22.c)
+```c
+#include <stdio.h>
+
+int findNthDigitOfFraction(int a, int b, int n) {
+    int i, result;
+    a %= b;
+
+    for (i = 0; i < n; i++) {
+        a *= 10;
+        result = a / b;
+        a %= b;
+    }
+
+    return result;
+}
+
+int main() {
+    int a, b, n;
+    scanf("%d %d %d", &a, &b, &n);
+
+    int nthDigit = findNthDigitOfFraction(a, b, n);
+    printf("%d", nthDigit);
+
+    return 0;
+}
+```
 ---
 
 ## 题目 23: 判断闰年
@@ -1031,6 +1113,23 @@ int main() {
  **输出样例**  
 N
 
+个人解答：[T23.c](Exam/T23.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int year;
+    scanf("%d", &year);
+
+    if(year%4==0 && year%100!=0 || year%400==0){
+        printf("Y");
+    } else{
+        printf("N");
+    }
+    return 0;
+}
+```
+
 ---
 
 ## 题目 24: 判断一个数能否同时被3和5整除
@@ -1043,6 +1142,22 @@ N
 输入一行，包含一个整数n。（ -1,000,000 ≤n ≤ 1,000,000）  
  **输出格式**  
 输出一行，如果能同时被3和5整除输出YES，否则输出NO。
+
+个人解答：[T24.c](Exam/T24.c)
+```c
+#include <stdio.h>
+
+int main() {
+    long long n;
+    scanf("%lld", &n);
+    if(n%3==0&&n%5==0){
+        printf("YES");
+    } else{
+        printf("NO");
+    }
+    return 0;
+}
+```
 
 ---
 
@@ -1058,9 +1173,23 @@ N
  **输入样例**  
 *  
  **输出样例**  
+```
   *  
  ***  
 *****
+```
+
+个人解答：[T25.c](Exam/T25.c)
+```c
+#include <stdio.h>
+
+int main() {
+    char a;
+    scanf("%c", &a);
+
+    printf("  %c\n %c%c%c\n%c%c%c%c%c\n", a, a, a, a, a, a, a, a, a);
+}
+```
 
 ---
 
@@ -1082,8 +1211,39 @@ N
   
  **输入样例**  
 195  
- **输出样例**  
+ **输出样例**（疑似出错）
 3   5   7
+
+个人解答：[T26.c](Exam/T26.c)
+```c
+// 这是文件 T26.c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int count=0;
+    if(n%3==0) {
+        count++;
+        printf("3 ");
+    }
+    if(n%5==0){
+        count++;
+        printf("5 ");
+    }
+    if(n%7==0) {
+        count++;
+        printf("7 ");
+    }
+
+    if(count==0){
+        printf("n");
+    }
+
+    return 0;
+}
+```
 
 ---
 
@@ -1100,6 +1260,18 @@ N
 A  
  **输出样例**  
 65
+
+个人解答：[T27.c](Exam/T27.c)
+```c
+#include <stdio.h>
+
+int main() {
+    char n;
+    scanf("%c", &n);
+    printf("%d", n);
+    return 0;
+}
+```
 
 ---
 
@@ -1119,6 +1291,20 @@ A
  **输出样例**  
 0.714285714
 
+个人解答：[T28.c](Exam/T28.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int a,b;
+    scanf("%d %d", &a, &b);
+    double c=(double)a/b;
+    printf("%.9lf", c);
+    return 0;
+}
+```
+
+
 ---
 
 ## 题目 29: 对齐输出
@@ -1135,7 +1321,19 @@ A
  **输入样例**  
 123456789 0 -1  
  **输出样例**  
-123456789        0       -1
+`123456789        0       -1`
+
+个人解答：[T29.c](Exam/T29.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int a,b,c;
+    scanf("%d %d %d", &a, &b, &c);
+    printf("%8d %8d %8d", a, b, c);//%-8d是左对齐
+    return 0;
+}
+```
 
 ---
 
