@@ -1819,7 +1819,7 @@ int main() {
  **输出样例**  
 17
 
-个人解答：[T58.c](Exam%2FT58.c)
+@yestan1125 解答：[T58.c](Exam%2FT58.c)
 ```C
 #include <stdio.h>
 
