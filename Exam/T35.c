@@ -1,7 +1,12 @@
-// 这是文件 T35.c
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    int n;
+    scanf("%d", &n);
+    if(n%2==0){
+        printf("even");
+    } else{
+        printf("odd");
+    }
     return 0;
 }

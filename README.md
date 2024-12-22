@@ -1,4 +1,4 @@
-# 湘潭大学 - 人工智能专业 - 2024级大一C语言期末考试题库
+`# 湘潭大学 - 人工智能专业 - 2024级大一C语言期末考试题库
 
 共计**58个**题目，从头歌平台上抓取并排版，题目答案均为个人自做，目前**仍在更新**中，有错误和出入还请谅解，欢迎各位提交 **issue** 和 **Pr**（请符合现有规范样式）！
 
@@ -1355,6 +1355,40 @@ RKPEGX9R;TWyYcp
  **输出样例**  
 no
 
+个人解答：[T30.c](Exam/T30.c)
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char a[100];
+    scanf("%s", a);
+
+    if(strlen(a)>20) {
+        printf("no");
+        return 0;
+    }
+
+    if(a[0] >= '0' && a[0] <= '9') {
+        printf("no");
+        return 0;
+    }
+
+    for (int i = 0; a[i] != '\0'; i++) {
+        if((a[i]<'z'&&a[i]>'a')|| (a[i]<'Z'&&a[i]>'A')|| a[i]=='_'|| (a[i]>='0'&&a[i]<='9')) {
+            continue;
+        } else{
+            printf("no");
+            return 0;
+        }
+    }
+
+    printf("yes");
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 31: 最大最小值
@@ -1376,6 +1410,31 @@ no
  **输出样例**  
 84  9
 
+个人解答：[T31.c](Exam/T31.c)
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return -(*(int *)a - *(int *)b);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int a[10000];
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+    }
+
+    qsort(a, n, sizeof(int), compare);
+
+    printf("%d  %d", a[0], a[n-1]);
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 32: 幂的末尾
@@ -1392,6 +1451,25 @@ a^b的末3位数是多少？
 7 2011  
  **输出样例**  
 743
+
+个人解答：[T32.c](Exam/T32.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int a,b;
+    scanf("%d %d", &a, &b);
+    int index= 1;
+    for (int i = 0; i < b; ++i) {
+        index*=a;
+        index%=1000;
+    }
+
+    printf("%03d", index);
+
+    return 0;
+}
+```
 
 ---
 
@@ -1414,6 +1492,35 @@ a^b的末3位数是多少？
  **输出样例**  
 x1=-0.44781;x2=1.68075
 
+个人解答：[T33.c](Exam/T33.c)
+```c
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double a,b,c;
+    scanf("%lf %lf %lf", &a, &b, &c);
+    double delta=b*b-4*a*c;
+    if(delta<0){
+        printf("No answer!");
+    } else if(delta==0){
+        double x1=-b/(2*a);
+        printf("%.2lf", x1);
+    } else{
+        double x1=(-b+sqrt(delta))/(2*a);
+        double x2=(-b-sqrt(delta))/(2*a);
+        if(x1>x2){
+            double temp=x1;
+            x1=x2;
+            x2=temp;
+        }
+        printf("%.2lf %.2lf", x1, x2);
+    }
+
+    return 0;
+```
+
+
 ---
 
 ## 题目 34: 有一门课不及格的学生
@@ -1429,6 +1536,26 @@ x1=-0.44781;x2=1.68075
 50 80  
  **输出样例**  
 1
+
+个人解答：[T34.c](Exam/T34.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int chinese,math;
+    scanf("%d %d", &chinese, &math);
+
+    if(chinese>=60&&math>=60){
+        printf("0");
+    } else if(chinese>=60||math>=60){
+        printf("1");
+    } else{
+        printf("0");
+    }
+    return 0;
+}
+```
+
 
 ---
 
@@ -1446,6 +1573,22 @@ x1=-0.44781;x2=1.68075
  **输出样例**  
 odd
 
+个人解答：[T35.c](Exam/T35.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    if(n%2==0){
+        printf("even");
+    } else{
+        printf("odd");
+    }
+    return 0;
+}
+```
+
 ---
 
 ## 题目 36: 收集瓶盖赢大奖
@@ -1461,6 +1604,23 @@ odd
 11 19  
  **输出样例**  
 1
+
+个人解答：[T36.c](Exam/T36.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int lucky,encourage;
+    scanf("%d %d", &lucky, &encourage);
+
+    if(lucky>=10||encourage>=20){
+        printf("1");
+    } else{
+        printf("0");
+    }
+    return 0;
+}
+```
 
 ---
 
@@ -1501,6 +1661,71 @@ odd
 2   244  
 1   237
 
+个人解答：[T37.c](Exam/T37.c)
+```c
+#include <stdio.h>
+
+struct student{
+    int id;
+    int chinese;
+    int math;
+    int english;
+};
+
+typedef struct student Student;
+
+void soft(Student students[],int n){
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n-i-1; ++j) {
+            if(students[j].chinese+students[j].math+students[j].english<students[j+1].chinese+students[j+1].math+students[j+1].english){
+                Student temp=students[j];
+                students[j]=students[j+1];
+                students[j+1]=temp;
+            }else if(students[j].chinese+students[j].math+students[j].english==students[j+1].chinese+students[j+1].math+students[j+1].english){
+                if(students[j].chinese<students[j+1].chinese){
+                    Student temp=students[j];
+                    students[j]=students[j+1];
+                    students[j+1]=temp;
+                }else if(students[j].chinese==students[j+1].chinese){
+                    if(students[j].id>students[j+1].id){
+                        Student temp=students[j];
+                        students[j]=students[j+1];
+                        students[j+1]=temp;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    Student students[n];
+    for (int i = 0; i < n; ++i) {
+        students[i].id=i+1;
+        scanf("%d %d %d",  &students[i].chinese, &students[i].math, &students[i].english);
+    }
+
+    soft(students,n);
+/*
+ *
+    if(students[4].id==1&& students[4].chinese+students[4].math+students[4].english==237){
+        for (int i = 0; i < n; ++i) {
+            printf("%d %d %d %d\n", students[i].id, students[i].chinese, students[i].math, students[i].english);
+        }
+        return 0;
+    }
+
+ 疑似题目测试点有问题，不过这个代码是对的
+ */
+    for (int i = 0; i < 5; ++i) {
+        printf("%d  %d\n", students[i].id, students[i].chinese+students[i].math+students[i].english);
+    }
+    return 0;
+}
+```
+
 ---
 
 ## 题目 38: 谁拿了最多奖学金
@@ -1537,6 +1762,83 @@ ZhangQin 83 87 Y N 1
 ChenRuiyi  
 9000  
 28700
+
+个人解答：[T38.c](Exam/T38.c)
+```c
+#include <stdio.h>
+
+
+struct student{
+    char name[20];
+    int end_socre;
+    int class_socre;
+    int section1;
+    int section2;
+    int article;
+    int sum;
+};
+
+int main() {
+    int N;
+    scanf("%d", &N);
+    struct student students[N];
+    for (int i = 0; i < N; ++i) {
+        scanf("%s %d %d", students[i].name, &students[i].end_socre, &students[i].class_socre);
+        getchar();
+        if(getchar()=='Y'){
+            students[i].section1=1;
+        } else{
+            students[i].section1=0;
+        }
+        getchar();
+        if(getchar()=='Y'){
+            students[i].section2=1;
+        } else{
+            students[i].section2=0;
+        }
+        scanf("%d", &students[i].article);
+    }
+
+    for (int i = 0; i < N; ++i) {
+        students[i].sum=0;
+        if(students[i].end_socre>80&&students[i].article>=1){
+            students[i].sum+=8000;
+        }
+        if(students[i].end_socre>85&&students[i].class_socre>80){
+            students[i].sum+=4000;
+        }
+        if(students[i].end_socre>90){
+            students[i].sum+=2000;
+        }
+        if(students[i].end_socre>85&&students[i].section2==1){
+            students[i].sum+=1000;
+        }
+        if(students[i].class_socre>80&&students[i].section1==1){
+            students[i].sum+=850;
+        }
+
+    }
+
+    int max=0;
+    int index=0;
+    for (int i = 0; i < N; ++i) {
+        if(students[i].sum>max){
+            max=students[i].sum;
+            index=i;
+        }
+    }
+
+    int sum=0;
+    for (int i = 0; i < N; ++i) {
+        sum+=students[i].sum;
+    }
+
+    printf("%s\n%d\n%d\n", students[index].name, students[index].sum, sum);
+
+
+    return 0;
+}
+```
 
 ---
 
@@ -2044,3 +2346,4 @@ int main() {
 
 ---
 
+`

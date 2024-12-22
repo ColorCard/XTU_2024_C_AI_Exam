@@ -1,7 +1,13 @@
-// 这是文件 T36.c
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    int lucky,encourage;
+    scanf("%d %d", &lucky, &encourage);
+
+    if(lucky>=10||encourage>=20){
+        printf("1");
+    } else{
+        printf("0");
+    }
     return 0;
 }

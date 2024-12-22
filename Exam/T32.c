@@ -2,6 +2,15 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    int a,b;
+    scanf("%d %d", &a, &b);
+    int index= 1;
+    for (int i = 0; i < b; ++i) {
+        index*=a;
+        index%=1000;
+    }
+
+    printf("%03d", index);
+
     return 0;
 }

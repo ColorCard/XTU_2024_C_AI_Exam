@@ -2,6 +2,15 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    int chinese,math;
+    scanf("%d %d", &chinese, &math);
+
+    if(chinese>=60&&math>=60){
+        printf("0");
+    } else if(chinese>=60||math>=60){
+        printf("1");
+    } else{
+        printf("0");
+    }
     return 0;
 }
