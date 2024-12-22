@@ -1846,7 +1846,7 @@ int main() {
 
 **题目描述：**
 
-给定一个由英文字符、数字、空格和英文标点符号组成的字符串，长度不超过5000，请将其切分为单词，要求去掉所有的非英文字母，然后将单词全部转换成小写，然后统计每一个词出现的次数，输出频次最高的那个词以及它出现的次数。如果有多个词的频次相同，则输出按字典序排列在最前面的那个。  
+给定一个由英文字符、数字、空格和英文标点符号组成的字符串，长度不超过5000，请将其切分为单词，**要求去掉所有的非英文字母**，然后将**单词全部转换成小写**，然后统计每一个词出现的次数，输出频次最高的那个词以及它出现的次数。如果有多个词的频次相同，则输出按字典序排列在最前面的那个。  
   
 例如给定字符串：String input = "1 fish 2 fish red fish blue fish";  
 频次最高的单词是fish，它出现了4次。  
@@ -1891,7 +1891,6 @@ int compare(const void *a, const void *b) {
 void processInput(char *input, WordCount *wordCounts, int *size) {
     char word[50];
     int len = 0;
-    int wordIndex = 0;
 
     for (int i = 0; input[i] != '\0'; i++) {
         if (isalpha(input[i])) {
