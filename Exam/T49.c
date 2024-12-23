@@ -1,7 +1,12 @@
-// 这是文件 T49.c
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    int n;
+    scanf("%d", &n);
+    int sum=1;
+    for (int i = 0; i < n-1; ++i) {
+        sum=(sum+1)*2;
+    }
+    printf("%d", sum);
     return 0;
 }

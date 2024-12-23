@@ -1974,6 +1974,29 @@ int main() {
  **输出样例**  
 99
 
+个人解答：[T40.c](Exam/T40.c)
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a,const void *b){
+    return -(*(int *)a-*(int *)b);
+}//降序
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int a[n];
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+    }
+    qsort(a,n, sizeof(int),compare);
+
+    printf("%d", a[0]);
+    return 0;
+}
+```
+
 ---
 
 ## 题目 41: 高考志愿排序
@@ -2030,6 +2053,57 @@ int main() {
   **输出样例**  
  6   7   1   3   10
 
+个人解答：[T41.c](Exam/T41.c)
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student{
+int id;
+int chinese;
+int math;
+int english;
+};
+
+typedef struct student Student;
+
+int compare(const void*a,const void*b){
+Student *studentA=(Student*)a;
+Student *studentB=(Student*)b;
+if(studentA->chinese+studentA->math+studentA->english!=studentB->chinese+studentB->math+studentB->english){
+return studentB->chinese+studentB->math+studentB->english-studentA->chinese-studentA->math-studentA->english;
+}
+if(studentA->chinese!=studentB->chinese){
+return studentB->chinese-studentA->chinese;
+}
+if(studentA->math!=studentB->math){
+return studentB->math-studentA->math;
+}
+if(studentA->english!=studentB->english){
+return studentB->english-studentA->english;
+}
+
+return studentA->id-studentB->id;
+}
+
+int main() {
+int n,m;
+scanf("%d %d", &n, &m);
+Student students[n];
+for (int i = 0; i < n; ++i) {
+students[i].id=i+1;
+scanf("%d %d %d",  &students[i].chinese, &students[i].math, &students[i].english);
+}
+
+qsort(students,n, sizeof(Student),compare);
+for (int i = 0; i < m; ++i) {
+printf("%d ", students[i].id);
+}
+
+return 0;
+}
+```
+
 ---
 
 ## 题目 42: 地球人口承载力估计
@@ -2049,6 +2123,22 @@ int main() {
 110 90 90 210  
  **输出样例**  
 75.00
+
+个人解答：[T42.c](Exam/T42.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int x,a,y,b;
+    scanf("%d %d %d %d", &x, &a, &y, &b);
+    double z;
+    // 可以从这里来思考，其中使得m*z=k即可：total= x*a*(m*x-k) = y*b*(m*y-k)
+    z = (double)(y*b-a*x)/(b-a);
+    printf("%.2f", z);
+
+    return 0;
+}
+```
 
 ---
 
@@ -2079,6 +2169,35 @@ Zhao
 Liu  
 3
 
+个人解答：[T43.c](Exam/T43.c)
+```c
+#include <stdio.h>
+
+struct patient{
+    char name[20];
+    double temperature;
+    int cough;
+};
+
+typedef struct patient Patient;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    Patient patients[n];
+    int index=0;
+    for (int i = 0; i < n; ++i) {
+        scanf("%s %lf %d", patients[i].name, &patients[i].temperature, &patients[i].cough);
+        if(patients[i].temperature>=37.5&&patients[i].cough==1){
+            printf("%s\n", patients[i].name);
+            index++;
+        }
+    }
+    printf("%d", index);
+    return 0;
+}
+```
+
 ---
 
 ## 题目 44: 人口增长
@@ -2096,6 +2215,22 @@ Liu
 13 10  
  **输出样例**  
 13.1306
+
+个人解答：[T44.c](Exam/T44.c)
+```c
+#include <stdio.h>
+
+int main() {
+    double x,n;
+    scanf("%lf %lf", &x, &n);
+
+    for (int i = 0; i < n; ++i) {
+        x= x+x*0.1/100;
+    }
+    printf("%.4f", x);
+    return 0;
+}
+```
 
 ---
 
@@ -2116,6 +2251,27 @@ Liu
  **输出样例**  
 15.30
 
+个人解答：[T45.c](Exam/T45.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int s;
+    scanf("%d", &s);
+    double cost;
+    if(s<=3){
+        cost=13;
+    } else if(s<=15){
+        cost=13+(s-3)*2.3;
+    } else{
+        cost=13+12*2.3+(s-15)*3.45;
+    }
+
+    printf("%.2f", cost);
+    return 0;
+}
+```
+
 ---
 
 ## 题目 46: 加密的病历单
@@ -2123,7 +2279,7 @@ Liu
 **题目描述：**
 
 小英是药学专业大三的学生，暑假期间获得了去医院药房实习的机会。  
-      
+   
   
 在药房实习期间，小英扎实的专业基础获得了医生的一致好评，得知小英在计算概论中取得过好成绩后，主任又额外交给她一项任务，解密抗战时期被加密过的一些伤员的名单。  
   
@@ -2149,6 +2305,52 @@ Trvdizrrvj
 提示  
 注意：要求从密文得到原文
 
+个人解答：[T46.c](Exam/T46.c)
+```c
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+void reverse_string(char* str) {
+    if (str == NULL) return;
+
+    int length = strlen(str);
+    int start = 0;
+    int end = length - 1;
+
+    while (start < end) {
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}//双指针法反转字符串
+
+int main() {
+    char a[200];
+    fgets(a, 200, stdin);
+    for (int i = 0; i < strlen(a); ++i) {
+        if(islower(a[i])){
+            a[i]=toupper(a[i]);
+        } else if(isupper(a[i])){
+            a[i]=tolower(a[i]);
+        }
+        if(a[i]>='a'&&a[i]<='z'){
+            a[i]=(a[i]+3-'a')%26+'a';
+        } else if(a[i]>='A'&&a[i]<='Z'){
+            a[i]=(a[i]+3-'A')%26+'A';
+        }
+    }
+
+    reverse_string(a);
+
+    puts(a);
+
+    return 0;
+}
+```
+
 ---
 
 ## 题目 47: 切分单词并排序
@@ -2161,6 +2363,7 @@ Trvdizrrvj
   
 处理完成之后得到以下单词序列：  
 at by centrum created cwi cwi guido http in in netherlands nl python see the was www  
+
   
  **输入格式**  
 一行字符串，含有英文字符、数字、空格和英文标点符号  
@@ -2171,6 +2374,68 @@ at by centrum created cwi cwi guido http in in netherlands nl python see the was
 The Python Software Foundation (PSF, see https://www.python.org/psf/) was formed.  
  **输出样例**  
 formed   foundation   https   org   psf   psf   python   python   see   software   the   was   www
+
+个人解答：[T47.c](Exam/T47.c)
+```c
+// 这是文件 T47.c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+#define MAX_LEN 200
+
+struct word {
+char word[50];
+};
+
+typedef struct word Word;
+
+int compare(const void *a, const void *b) {
+return strcmp(((Word *)a)->word, ((Word *)b)->word);
+}
+
+void processInput(char *input, Word *wordCount, int *size) {
+char word[50];
+int len=0;
+
+for (int i = 0; input[i] != '\0'; i++) {
+if (isalpha(input[i])) {
+word[len++] = tolower(input[i]);
+} else if (len > 0) {
+word[len] = '\0';
+len = 0;
+
+strcpy(wordCount[*size].word, word);
+(*size)++;
+
+}
+}
+// 处理最后一个单词
+if (len > 0) {
+word[len] = '\0';
+strcpy(wordCount[*size].word, word);
+(*size)++;
+}
+}
+
+int main() {
+char input[MAX_LEN];
+Word wordCount[1000];
+int size = 0;
+
+fgets(input, MAX_LEN, stdin);
+
+processInput(input, wordCount, &size);
+
+qsort(wordCount, size, sizeof(Word), compare);
+
+for (int i = 0; i < size; i++) {
+printf("%s ", wordCount[i].word);
+}
+return 0;
+}
+```
 
 ---
 
@@ -2219,6 +2484,62 @@ assign
 to  
 literal
 
+个人解答：[T48.c](Exam/T48.c)
+```c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LEN 200
+
+struct word {
+    char word[50];
+};
+
+typedef struct word Word;
+
+
+void processInput(char *input, Word *wordCount, int *size) {
+    char word[50];
+    int len=0;
+
+    for (int i = 0; input[i] != '\0'; i++) {
+        if (isalpha(input[i])) {
+            word[len++] = input[i];
+        } else if (len > 0) {
+            word[len] = '\0';
+            len = 0;
+
+            strcpy(wordCount[*size].word, word);
+            (*size)++;
+
+        }
+    }
+    // 处理最后一个单词
+    if (len > 0) {
+        word[len] = '\0';
+        strcpy(wordCount[*size].word, word);
+        (*size)++;
+    }
+}
+
+int main() {
+    char input[MAX_LEN];
+    Word wordCount[1000];
+    int size = 0;
+
+    fgets(input, MAX_LEN, stdin);
+
+    processInput(input, wordCount, &size);
+
+
+    for (int i = 0; i < size; i++) {
+        printf("%s\n", wordCount[i].word);
+    }
+    return 0;
+}
+```
+
 ---
 
 ## 题目 49: 猴子吃桃
@@ -2228,6 +2549,22 @@ literal
 猴子第一天摘下若干个仙桃，当即吃了一半，还不过瘾，又多吃了一个。第二天早上又将剩下的仙桃吃掉一半，又多吃一个。以后每天早上都吃了前一天剩下的一半零一个。到第N天早上想再吃时，见只剩下一个仙桃。求第一天共摘多少仙桃。  
 输入： N   
 输出： 仙桃总数
+
+个人解答：[T49.c](Exam/T49.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int sum=1;
+    for (int i = 0; i < n-1; ++i) {
+        sum=(sum+1)*2;
+    }
+    printf("%d", sum);
+    return 0;
+}
+```
 
 ---
 
@@ -2316,6 +2653,57 @@ n只猴子围成一圈，从1到n顺序编号。从第q只猴子开始，从1到
 7 4 3  
  **输出样例**  
 4
+
+个人解答：[T55.c](Exam/T55.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int n,m,q;
+    scanf("%d %d %d", &n, &m, &q);
+    int a[n];
+    
+    for (int i = 0; i < n; ++i) {
+        a[i]=1;
+    }//1为圈内，0为出圈
+    
+    int count=0;//报数
+    int total=n;//剩下人数
+    int index=q-1;//当前位置
+
+    while (total>1){
+        if(a[index]==1){
+            count++;
+            if(count==m){
+                a[index]=0;
+                count=0;
+                total--;
+            }
+        }
+        index++;
+        if(index==n){
+            index=0;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 1) {
+            printf("%d\n", i + 1); // 输出实际的编号
+            return 0;
+        }
+    }
+    printf("none\n");
+    
+/*
+    值得一提的是这个题目有点莫名奇妙，因为压根不会出现none的情况，所以这个输出是多余的
+    但是非常奇怪的是，测试点过不去，我也不知道为什么。
+*/
+
+    return 0;
+}
+```
+
+
 
 ---
 
@@ -2434,5 +2822,3 @@ int main() {
 ```
 
 ---
-
-`
