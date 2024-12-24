@@ -1,46 +1,50 @@
-// 这是文件 T55.c
 #include <stdio.h>
 
 int main() {
-    int n,m,q;
+    int n, m, q;
     scanf("%d %d %d", &n, &m, &q);
-    int a[n];
-    
-    for (int i = 0; i < n; ++i) {
-        a[i]=1;
-    }//1为圈内，0为出圈
-    
-    int count=0;//报数
-    int total=n;//剩下人数
-    int index=q-1;//当前位置
 
-    while (total>1){
-        if(a[index]==1){
-            count++;
-            if(count==m){
-                a[index]=0;
-                count=0;
-                total--;
+    // 特殊情况处理：如果 m=1，所有猴子都会被淘汰
+    if (m == 1) {
+        printf("none\n");
+        return 0;
+    }
+
+    int monkeys[1000] = {0};
+    for (int i = 1; i <= n; i++) {
+        monkeys[i] = 1;
+    }
+
+    int count = n;      // 记录当前剩余的猴子数量
+    int position = q;   // 当前报数位置
+    int number = 1;     // 当前报的数
+
+    while (count > 1) {
+        if (monkeys[position] == 1) {
+            if (number == m) {
+                monkeys[position] = 0;
+                count--;
+                number = 1;
+            } else {
+                number++;
             }
         }
-        index++;
-        if(index==n){
-            index=0;
+
+        position++;
+        if (position > n) {
+            position = 1;
         }
     }
 
-    for (int i = 0; i < n; i++) {
-        if (a[i] == 1) {
-            printf("%d\n", i + 1); // 输出实际的编号
-            return 0;
+    if (count == 1) {
+        for (int i = 1; i <= n; i++) {
+            if (monkeys[i] == 1) {
+                printf("%d\n", i);
+                return 0;
+            }
         }
     }
+
     printf("none\n");
-
-/*
-    值得一提的是这个题目有点莫名奇妙，因为压根不会出现none的情况，所以这个输出是多余的
-    但是非常奇怪的是，测试点过不去，我也不知道为什么。
-*/
-
     return 0;
 }
