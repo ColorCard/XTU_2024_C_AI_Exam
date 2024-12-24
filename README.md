@@ -2581,6 +2581,43 @@ int main() {
 输入：5  
 输出：4号猴子是大王。
 
+个人解答：[T50.c](Exam/T50.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int a[100];
+    for (int i = 0; i < n; ++i) {
+        a[i]=1;
+    }
+    int count=0;
+    int index=0;
+    int num=0;
+    while(count<n-1){
+        if(a[index]==1){
+            num++;
+            if(num==3){
+                a[index]=0;
+                count++;
+                num=0;
+            }
+        }
+        index++;
+        if(index==n){
+            index=0;
+        }
+    }
+    for (int i = 0; i < n; ++i) {
+        if(a[i]==1){
+            printf("%d号猴子是大王", i+1);
+        }
+    }
+    return 0;
+}
+```
+
 ---
 
 ## 题目 51: 根据自己的年龄和生肖计算别人的生肖
@@ -2591,6 +2628,26 @@ int main() {
 样例输入：8 1 9  
 样例输出：2
 
+个人解答：[T51.c](Exam/T51.c)
+```c
+#include <stdio.h>
+
+int main(void){
+    int a,b,c;
+    scanf("%d %d %d",&a,&b,&c);
+
+    int e;
+    e = ((b+c-a)%12+12)%12;
+    if(e == 0){
+        printf("12");
+    }
+    else{
+        printf("%d",e);
+    }
+    
+}
+```
+
 ---
 
 ## 题目 52: 猴子吃桃问题
@@ -2600,6 +2657,25 @@ int main() {
 题目：猴子吃桃问题：猴子摘下若干个桃子，第一天吃了桃子的一半多一个，以后每天吃了前一天剩下的一半多一个，到第n天吃以前发现只剩下一个桃子，要求编写函数GetNumber(int n)求出猴子共摘了几个桃子。  
 样例输入：5  
 样例输出：46
+
+@yestan1125 解答：[T52.c](Exam/T52.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int sum = 1; 
+
+    for (int i = n - 1; i >= 1; i--) {
+        sum = (sum + 1) * 2;  // 根据每天吃桃的规律倒推前一天桃子的数量
+    }
+
+    printf("%d\n", sum);
+
+    return 0;
+}
+```
 
 ---
 
@@ -2615,7 +2691,24 @@ int main() {
 输出：第1天总共摘的胡萝卜数  
   
 输入实例：1  
-输出实例：1534  
+输出实例：1534 
+
+@yestan1125 解答：[T53.c](Exam/T53.c)
+```c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int sum = n;
+    for (int i = 9; i >= 1; i--) {
+        sum = (sum + 1) * 2;
+    }
+    printf("%d\n", sum);
+    return 0;
+}
+```
+
   
   
 ---
@@ -2633,6 +2726,26 @@ int main() {
 样例输出：  
 共有50只鸡  
 共有50只兔
+
+@yestan1125 解答：[T54.c](Exam/T54.c)
+```c
+#include <stdio.h>
+
+void Chicken(int m, int n, int *c, int *r) {
+    *c = (4 * m - n) / 2;
+    *r = m - *c;
+}
+
+int main() {
+    int m, n;
+    scanf("%d %d", &m, &n);
+    int chicken, rabbit;
+    Chicken(m, n, &chicken, &rabbit);
+    printf("共有%d只鸡\n", chicken);
+    printf("共有%d只兔\n", rabbit);
+    return 0;
+}
+```
 
 ---
 
@@ -2728,6 +2841,62 @@ Thoma Austi Lia Sea Trista Brya
 Brya Camero Austi Lia Hunte Trista Jesu   
  **输出样例**  
 Austi Brya Lia Trista
+
+@yestan1125 解答：[T56.c](Exam/T56.c)
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX_NAME_LENGTH 20
+#define MAX_STUDENTS 100
+
+// 冒泡排序函数，用于对字符串数组按照字典序排序
+int compare(const void *a, const void *b) {
+    return strcmp((char *)a, (char *)b);
+}
+
+int main() {
+    int m, n;
+    scanf("%d", &m);
+    char studentsA[MAX_STUDENTS][MAX_NAME_LENGTH];
+    for (int i = 0; i < m; i++) {
+        scanf("%s", studentsA[i]);
+    }
+
+    scanf("%d", &n);
+    char studentsB[MAX_STUDENTS][MAX_NAME_LENGTH];
+    for (int i = 0; i < n; i++) {
+        scanf("%s", studentsB[i]);
+    }
+
+    // 找出重复选课的同学，使用一个临时数组来记录重复的同学
+    char duplicates[MAX_STUDENTS][MAX_NAME_LENGTH];
+    int duplicateCount = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (strcmp(studentsA[i], studentsB[j]) == 0) {
+                strcpy(duplicates[duplicateCount], studentsA[i]);
+                duplicateCount++;
+            }
+        }
+    }
+
+    // 对重复选课的同学数组进行排序
+    qsort(duplicates, duplicateCount, sizeof(duplicates[0]), compare);
+
+    // 输出重复选课的同学姓名
+    for (int i = 0; i < duplicateCount; i++) {
+        if (i!= 0) {
+            printf(" ");
+        }
+        printf("%s", duplicates[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+```
 
 ---
 
