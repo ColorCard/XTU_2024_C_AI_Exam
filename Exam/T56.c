@@ -1,23 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX_NAME_LENGTH 20
 #define MAX_STUDENTS 100
 
 // 冒泡排序函数，用于对字符串数组按照字典序排序
-void bubbleSort(char arr[][MAX_NAME_LENGTH], int size) {
-    int i, j;
-    char temp[MAX_NAME_LENGTH];
-    for (i = 0; i < size - 1; i++) {
-        for (j = 0; j < size - i - 1; j++) {
-            if (strcmp(arr[j], arr[j + 1]) > 0) {
-                strcpy(temp, arr[j]);
-                strcpy(arr[j], arr[j + 1]);
-                strcpy(arr[j + 1], temp);
-            }
-        }
-    }
+int compare(const void *a, const void *b) {
+    return strcmp((char *)a, (char *)b);
 }
 
 int main() {
@@ -47,7 +37,7 @@ int main() {
     }
 
     // 对重复选课的同学数组进行排序
-    bubbleSort(duplicates, duplicateCount);
+    qsort(duplicates, duplicateCount, sizeof(duplicates[0]), compare);
 
     // 输出重复选课的同学姓名
     for (int i = 0; i < duplicateCount; i++) {
