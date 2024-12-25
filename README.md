@@ -72,7 +72,7 @@ int main(){
 
 ---
 
-## 题目 3: 机器翻译
+## 题目 3: 机器翻译 [Mark]
 
 **题目描述：**
 
@@ -118,7 +118,7 @@ int main(){
     }
 
     int a[N];
-    int index=0;
+    int index=0;//记录查词典的次数
     int temp=0;
     for (int i = 0; i < N; ++i) {
         scanf("%d",&a[i]);
@@ -375,7 +375,7 @@ int main() {
 
 ---
 
-## 题目 9: 成绩排序
+## 题目 9: 成绩排序 [Mark]
 
 **题目描述：**
 
@@ -426,6 +426,7 @@ Carso 75
 个人解答：[T9.c](Exam/T9.c)
 ```c
 #include <stdio.h>
+#include <stdlib.h>
 
 struct student {
     char name[20];
@@ -434,26 +435,19 @@ struct student {
 
 typedef struct student Student;
 
-void sort(Student *students, int n) {
-    for(int i = 0; i < n - 1; i++) {
-        for(int j = 0; j < n - 1 - i; j++) {
-            if(students[j].score < students[j + 1].score) {
-                Student temp = students[j];
-                students[j] = students[j + 1];
-                students[j + 1] = temp;
-            }
-        }
-    }
-}//冒泡排序
+int compare(const void *a, const void *b) {
+    return ((Student *)b)->score - ((Student *)a)->score;
+}//降序
 
 int main() {
     int n;
     scanf("%d", &n);
     Student students[n];
+    
     for(int i = 0; i < n; i++) {
         scanf("%s %d", students[i].name, &students[i].score);
     }
-    sort(students, n);
+    qsort(students, n, sizeof(Student), compare);
 
     for(int i = 0; i < n; i++) {
         printf("%s %d\n", students[i].name, students[i].score);
@@ -461,7 +455,6 @@ int main() {
 
     return 0;
 }
-
 ```
 
 ---
@@ -502,7 +495,7 @@ int main() {
 
 ---
 
-## 题目 11: 苹果和虫子
+## 题目 11: 苹果和虫子 [Mark]
 
 **题目描述：**
 
@@ -669,7 +662,7 @@ int main() {
 
 ---
 
-## 题目 15: 流感传染
+## 题目 15: 流感传染 [Mark]
 
 **题目描述：**
 
@@ -1054,7 +1047,7 @@ int main() {
 
 ---
 
-## 题目 22: 求小数的某一位
+## 题目 22: 求小数的某一位 [Mark]
 
 **题目描述：**
 
@@ -1437,7 +1430,7 @@ int main() {
 
 ---
 
-## 题目 32: 幂的末尾
+## 题目 32: 幂的末尾 [Mark]
 
 **题目描述：**
 
@@ -1624,7 +1617,7 @@ int main() {
 
 ---
 
-## 题目 37: 奖学金
+## 题目 37: 奖学金 [Mark]
 
 **题目描述：**
 
@@ -1664,6 +1657,7 @@ int main() {
 个人解答：[T37.c](Exam/T37.c)
 ```c
 #include <stdio.h>
+#include <stdlib.h>
 
 struct student{
     int id;
@@ -1674,27 +1668,13 @@ struct student{
 
 typedef struct student Student;
 
-void soft(Student students[],int n){
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n-i-1; ++j) {
-            if(students[j].chinese+students[j].math+students[j].english<students[j+1].chinese+students[j+1].math+students[j+1].english){
-                Student temp=students[j];
-                students[j]=students[j+1];
-                students[j+1]=temp;
-            }else if(students[j].chinese+students[j].math+students[j].english==students[j+1].chinese+students[j+1].math+students[j+1].english){
-                if(students[j].chinese<students[j+1].chinese){
-                    Student temp=students[j];
-                    students[j]=students[j+1];
-                    students[j+1]=temp;
-                }else if(students[j].chinese==students[j+1].chinese){
-                    if(students[j].id>students[j+1].id){
-                        Student temp=students[j];
-                        students[j]=students[j+1];
-                        students[j+1]=temp;
-                    }
-                }
-            }
-        }
+int compare(const void *a, const void *b) {
+    if (((Student *)b)->chinese+((Student *)b)->math+((Student *)b)->english != ((Student *)a)->chinese+((Student *)a)->math+((Student *)a)->english) {
+        return ((Student *)b)->chinese+((Student *)b)->math+((Student *)b)->english - ((Student *)a)->chinese+((Student *)a)->math+((Student *)a)->english;
+    } else if (((Student *)b)->chinese != ((Student *)a)->chinese) {
+        return ((Student *)b)->chinese - ((Student *)a)->chinese;
+    } else {
+        return ((Student *)a)->id - ((Student *)b)->id;
     }
 }
 
@@ -1707,18 +1687,8 @@ int main() {
         scanf("%d %d %d",  &students[i].chinese, &students[i].math, &students[i].english);
     }
 
-    soft(students,n);
-/*
- *
-    if(students[4].id==1&& students[4].chinese+students[4].math+students[4].english==237){
-        for (int i = 0; i < n; ++i) {
-            printf("%d %d %d %d\n", students[i].id, students[i].chinese, students[i].math, students[i].english);
-        }
-        return 0;
-    }
+    qsort(students, n, sizeof(Student), compare);
 
- 疑似题目测试点有问题，不过这个代码是对的
- */
     for (int i = 0; i < 5; ++i) {
         printf("%d  %d\n", students[i].id, students[i].chinese+students[i].math+students[i].english);
     }
@@ -1728,7 +1698,7 @@ int main() {
 
 ---
 
-## 题目 38: 谁拿了最多奖学金
+## 题目 38: 谁拿了最多奖学金 [Mark]
 
 **题目描述：**
 
@@ -1842,7 +1812,7 @@ int main() {
 
 ---
 
-## 题目 39: 查找高频词 
+## 题目 39: 查找高频词 [Mark]
 
 **题目描述：**
 
@@ -1999,7 +1969,7 @@ int main() {
 
 ---
 
-## 题目 41: 高考志愿排序
+## 题目 41: 高考志愿排序 [Mark]
 
 **题目描述：**
 
@@ -2059,54 +2029,55 @@ int main() {
 #include <stdlib.h>
 
 struct student{
-int id;
-int chinese;
-int math;
-int english;
+    int id;
+    int chinese;
+    int math;
+    int english;
 };
 
 typedef struct student Student;
 
 int compare(const void*a,const void*b){
-Student *studentA=(Student*)a;
-Student *studentB=(Student*)b;
-if(studentA->chinese+studentA->math+studentA->english!=studentB->chinese+studentB->math+studentB->english){
-return studentB->chinese+studentB->math+studentB->english-studentA->chinese-studentA->math-studentA->english;
-}
-if(studentA->chinese!=studentB->chinese){
-return studentB->chinese-studentA->chinese;
-}
-if(studentA->math!=studentB->math){
-return studentB->math-studentA->math;
-}
-if(studentA->english!=studentB->english){
-return studentB->english-studentA->english;
-}
+    Student *studentA=(Student*)a;
+    Student *studentB=(Student*)b;
+    
+    if(studentA->chinese+studentA->math+studentA->english!=studentB->chinese+studentB->math+studentB->english){
+        return studentB->chinese+studentB->math+studentB->english-studentA->chinese-studentA->math-studentA->english;
+    }
+    if(studentA->chinese!=studentB->chinese){
+        return studentB->chinese-studentA->chinese;
+    }
+    if(studentA->math!=studentB->math){
+        return studentB->math-studentA->math;
+    }
+    if(studentA->english!=studentB->english){
+        return studentB->english-studentA->english;
+    }
 
-return studentA->id-studentB->id;
+    return studentA->id-studentB->id;
 }
 
 int main() {
-int n,m;
-scanf("%d %d", &n, &m);
-Student students[n];
-for (int i = 0; i < n; ++i) {
-students[i].id=i+1;
-scanf("%d %d %d",  &students[i].chinese, &students[i].math, &students[i].english);
-}
+    int n,m;
+    scanf("%d %d", &n, &m);
+    Student students[n];
+    for (int i = 0; i < n; ++i) {
+        students[i].id=i+1;
+        scanf("%d %d %d",  &students[i].chinese, &students[i].math, &students[i].english);
+    }
 
-qsort(students,n, sizeof(Student),compare);
-for (int i = 0; i < m; ++i) {
-printf("%d ", students[i].id);
-}
+    qsort(students,n, sizeof(Student),compare);
+    for (int i = 0; i < m; ++i) {
+        printf("%d ", students[i].id);
+    }
 
-return 0;
+    return 0;
 }
 ```
 
 ---
 
-## 题目 42: 地球人口承载力估计
+## 题目 42: 地球人口承载力估计 [Mark]
 
 **题目描述：**
 
@@ -2274,7 +2245,7 @@ int main() {
 
 ---
 
-## 题目 46: 加密的病历单
+## 题目 46: 加密的病历单 [Mark]
 
 **题目描述：**
 
@@ -2353,7 +2324,7 @@ int main() {
 
 ---
 
-## 题目 47: 切分单词并排序
+## 题目 47: 切分单词并排序 [Mark]
 
 **题目描述：**
 
@@ -2377,7 +2348,6 @@ formed   foundation   https   org   psf   psf   python   py
 
 个人解答：[T47.c](Exam/T47.c)
 ```c
-// 这是文件 T47.c
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -2386,60 +2356,61 @@ formed   foundation   https   org   psf   psf   python   py
 #define MAX_LEN 200
 
 struct word {
-char word[50];
+    char word[50];
 };
 
 typedef struct word Word;
 
 int compare(const void *a, const void *b) {
-return strcmp(((Word *)a)->word, ((Word *)b)->word);
+    return strcmp(((Word *)a)->word, ((Word *)b)->word);
 }
 
 void processInput(char *input, Word *wordCount, int *size) {
-char word[50];
-int len=0;
+    char word[50];
+    int len=0;
 
-for (int i = 0; input[i] != '\0'; i++) {
-if (isalpha(input[i])) {
-word[len++] = tolower(input[i]);
-} else if (len > 0) {
-word[len] = '\0';
-len = 0;
+    for (int i = 0; input[i] != '\0'; i++) {
+        if (isalpha(input[i])) {
+            word[len++] = tolower(input[i]);
+        } else if (len > 0) {
+            word[len] = '\0';
+            len = 0;
 
-strcpy(wordCount[*size].word, word);
-(*size)++;
+            strcpy(wordCount[*size].word, word);
+            (*size)++;
 
-}
-}
-// 处理最后一个单词
-if (len > 0) {
-word[len] = '\0';
-strcpy(wordCount[*size].word, word);
-(*size)++;
-}
+        }
+    }
+    // 处理最后一个单词
+    if (len > 0) {
+        word[len] = '\0';
+        strcpy(wordCount[*size].word, word);
+        (*size)++;
+    }
 }
 
 int main() {
-char input[MAX_LEN];
-Word wordCount[1000];
-int size = 0;
+    char input[MAX_LEN];
+    Word wordCount[1000];
+    int size = 0;
 
-fgets(input, MAX_LEN, stdin);
+    fgets(input, MAX_LEN, stdin);
 
-processInput(input, wordCount, &size);
+    processInput(input, wordCount, &size);
 
-qsort(wordCount, size, sizeof(Word), compare);
+    qsort(wordCount, size, sizeof(Word), compare);
 
-for (int i = 0; i < size; i++) {
-printf("%s ", wordCount[i].word);
+    for (int i = 0; i < size; i++) {
+        printf("%s ", wordCount[i].word);
+    }
+    return 0;
 }
-return 0;
-}
+
 ```
 
 ---
 
-## 题目 48: 单词处理
+## 题目 48: 单词处理 [Mark]
 
 **题目描述：**
 
@@ -2542,7 +2513,7 @@ int main() {
 
 ---
 
-## 题目 49: 猴子吃桃
+## 题目 49: 猴子吃桃 [Mark]
 
 **题目描述：**
 
@@ -2749,7 +2720,7 @@ int main() {
 
 ---
 
-## 题目 55: 猴子选大王（二）
+## 题目 55: 猴子选大王（二） [Mark]
 
 **题目描述：**
 
@@ -2825,7 +2796,7 @@ int main() {
 
 ---
 
-## 题目 56: 重复选课的学生
+## 题目 56: 重复选课的学生 [Mark]
 
 **题目描述：**
 
