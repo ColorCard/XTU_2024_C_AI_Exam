@@ -40,6 +40,7 @@ void processInput(char *input, Word *wordCount, int *size) {
     }
 }
 
+
 int main() {
     char input[MAX_LEN];
     Word wordCount[1000];
